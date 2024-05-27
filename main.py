@@ -56,20 +56,17 @@ def execute_Stemming():
 def ros(train,test,ty):
     type = "ros_"+ty
     X_train, y_train, X_test, y_test = ROS(train, test)
+
     grid_SVC(X_train,y_train,X_test,y_test,type)
     grid_naive_bayes(X_train,y_train,X_test,y_test,type)
-    
-    grid_xgBoost(X_train,y_train,X_test,y_test,type)(X_train,y_train,X_test,y_test,type)
-    grid_logistic_regression(X_train, y_train, X_test, y_test, type)
 
 def rus(train,test,ty):
     type = "rus_"+ty
     X_train, y_train, X_test, y_test = ROS(train, test)
+
     grid_SVC(X_train,y_train,X_test,y_test,type)
     grid_naive_bayes(X_train,y_train,X_test,y_test,type)
     
-    grid_xgBoost(X_train,y_train,X_test,y_test,type)(X_train,y_train,X_test,y_test,type)
-    grid_logistic_regression(X_train, y_train, X_test, y_test, type)
 
 def backTranslation(train,test,ty):
     type = "backTranslation_"+ty
@@ -81,8 +78,6 @@ def backTranslation(train,test,ty):
     grid_SVC(X_train,y_train,X_test,y_test,type)
     grid_naive_bayes(X_train,y_train,X_test,y_test,type)
     
-    grid_xgBoost(X_train,y_train,X_test,y_test,type)(X_train,y_train,X_test,y_test,type)
-    grid_logistic_regression(X_train, y_train, X_test, y_test, type)
 
 def simple(train,test,ty):
     type = "simple_" + ty
@@ -95,12 +90,25 @@ def simple(train,test,ty):
     grid_SVC(X_train, y_train, X_test, y_test, type)
     grid_naive_bayes(X_train, y_train, X_test, y_test, type)
     
-    grid_xgBoost(X_train,y_train,X_test,y_test,type)(X_train, y_train, X_test, y_test, type)
-    grid_logistic_regression(X_train, y_train, X_test, y_test, type)
 
-execute_preProcessed()
-execute_Stemming()
-execute_Lematization()
-execute_nonStopWords()
+import multiprocessing
 
-print("FIM DA EXECUÇÃO :)")
+
+processos = []
+
+p1 = multiprocessing.Process(target=execute_preProcessed)
+p2 = multiprocessing.Process(target=execute_Stemming)
+p3 = multiprocessing.Process(target=execute_Lematization)
+p4 = multiprocessing.Process(target=execute_nonStopWords)
+
+processos.extend([p1,p2,p3,p4])
+
+# Execução
+for p in processos:
+    p.start()
+
+for p in processos:
+    p.join()
+
+    print("FIM DA EXECUÇÃO :)")
+
