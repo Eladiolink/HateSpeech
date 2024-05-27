@@ -1,5 +1,5 @@
 pandas>=2.2.2
-scikit-learn>=1.5.0
+scikit-learn==1.4.0
 imbalanced-learn>=0.12.2
 googletrans>=3.0.0
 spacy>=3.7.4
