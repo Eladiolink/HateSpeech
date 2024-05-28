@@ -1,0 +1,13 @@
+melhores parametros: {'alpha': 0.5, 'class_prior': [0.5714, 0.4286], 'fit_prior': True}
+melhor score: 0.7754618664140217
+melhor estimador: MultinomialNB(alpha=0.5, class_prior=[0.5714, 0.4286])
+score do melhor modelo: 0.7757885763000852
+clasificador report:               precision    recall  f1-score   support
+
+         0.0       0.76      0.90      0.82      2050
+         1.0       0.82      0.60      0.69      1469
+
+    accuracy                           0.78      3519
+   macro avg       0.79      0.75      0.76      3519
+weighted avg       0.78      0.78      0.77      3519
+

@@ -14,7 +14,7 @@ def get_value(type, file):
 
     dict["name"] = get_name(type, file)
     # Abre o arquivo em modo de leitura
-    with (open("Model/"+type+"/"+file, 'r') as arquivo):
+    with (open("./"+file, 'r') as arquivo):
         # Percorre linha por linha
         get = False
         ofensive = True
@@ -46,7 +46,8 @@ def get_value(type, file):
         return dict
 
 def get_name(model,file):
-    name = file.replace("best_model_", "")
+    n = file.split("/")[-1]
+    name = n.replace("best_model_", "")
     name = name.replace(".txt", "")
     name = name.replace("_"," ")
     name = model + " " + name
@@ -58,16 +59,21 @@ def gets_models_result(path,type):
     result = []
 
     for file in res:
-        result.append(get_value(type,file))
+        result.append(get_value(type,path+"/"+file))
 
     return result
-def print_results(results):
+def print_results(results,type):
     print('\n\n')
     for res in results:
-        print("Model: "+res["name"])
-        print("Accuracy: "+str(res["accuracy"]))
-        print("\t    Precission\t       Recall\tF1-Score")
-        print("0:\t\t"+"{:.2f}".format(res['0']['precision'])+"\t\t"+"{:.2f}".format(res['0']['recall'])+"\t  "+"{:.2f}".format(res['0']['f1_score']))
-        print("1:\t\t"+"{:.2f}".format(res['1']['precision'])+"\t\t"+"{:.2f}".format(res['1']['recall'])+"\t  "+"{:.2f}".format(res['1']['f1_score']))
-        print("\n")
-
+        if type in res['name']:
+            print("Model: "+res["name"])
+            print("Accuracy: "+str(res["accuracy"]))
+            print("\t    Precission\t       Recall\tF1-Score")
+            print("0:\t\t"+"{:.2f}".format(res['0']['precision'])+"\t\t"+"{:.2f}".format(res['0']['recall'])+"\t  "+"{:.2f}".format(res['0']['f1_score']))
+            print("1:\t\t"+"{:.2f}".format(res['1']['precision'])+"\t\t"+"{:.2f}".format(res['1']['recall'])+"\t  "+"{:.2f}".format(res['1']['f1_score']))
+            print("\n")
+            print("{:.2f}".format(res['0']['precision'])+" & "+"{:.2f}".format(res['1']['precision'])+" & "+"{:.2}".format(res['0']['recall'])+" & "+"{:.2f}".format(res['1']['recall'])+"\\\\")
+            
+            print("F1-Score:\n")
+            print("&  "+"{:.2f}".format(res['0']['f1_score'])+"  &  "+"{:.2f}".format(res['1']['f1_score'])+"  \\\\")
+            print("\n")

@@ -1,0 +1,13 @@
+melhores parametros: {'algorithm': 'SAMME.R', 'learning_rate': 0.1, 'n_estimators': 50}
+melhor score: 0.6919411985407333
+melhor estimador: AdaBoostClassifier(learning_rate=0.1)
+score do melhor modelo: 0.5211707871554419
+clasificador report:               precision    recall  f1-score   support
+
+         0.0       0.82      0.23      0.36      2050
+         1.0       0.46      0.93      0.62      1469
+
+    accuracy                           0.52      3519
+   macro avg       0.64      0.58      0.49      3519
+weighted avg       0.67      0.52      0.47      3519
+
