@@ -21,37 +21,37 @@ def execute_preProcessed():
     train = pd.read_csv("./Dataset/PreProcessed/train.csv")
     test = pd.read_csv("./Dataset/PreProcessed/test.csv")
 
-    simple(train,test,"preProcessed")
-    ros(train,test,"preProcessed")
+    # simple(train,test,"preProcessed")
+    # ros(train,test,"preProcessed")
     rus(train,test,"preProcessed")
-    backTranslation(train,test,"preProcessed")
+    # backTranslation(train,test,"preProcessed")
 
 def execute_Lematization():
     train = pd.read_csv("./Dataset/Lematization/train.csv")
     test = pd.read_csv("./Dataset/Lematization/test.csv")
 
-    simple(train, test, "lematization")
-    ros(train, test, "lematization")
+    # simple(train, test, "lematization")
+    # ros(train, test, "lematization")
     rus(train, test, "lematization")
-    backTranslation(train, test, "lematization")
+    # backTranslation(train, test, "lematization")
 
 def execute_nonStopWords():
     train = pd.read_csv("./Dataset/NonStopWords/train.csv")
     test = pd.read_csv("./Dataset/NonStopWords/test.csv")
 
-    simple(train, test, "nonStopWords")
-    ros(train, test, "nonStopWords")
+    # simple(train, test, "nonStopWords")
+    # ros(train, test, "nonStopWords")
     rus(train, test, "nonStopWords")
-    backTranslation(train, test, "nonStopWords")
+    # backTranslation(train, test, "nonStopWords")
 
 def execute_Stemming():
     train = pd.read_csv("./Dataset/Stemming/train.csv")
     test = pd.read_csv("./Dataset/Stemming/test.csv")
 
-    simple(train, test, "stemming")
-    ros(train, test, "stemming")
+    # simple(train, test, "stemming")
+    # ros(train, test, "stemming")
     rus(train, test, "stemming")
-    backTranslation(train, test, "stemming")
+    # backTranslation(train, test, "stemming")
 
 def ros(train,test,ty):
     type = "ros_"+ty
@@ -62,7 +62,7 @@ def ros(train,test,ty):
 
 def rus(train,test,ty):
     type = "rus_"+ty
-    X_train, y_train, X_test, y_test = ROS(train, test)
+    X_train, y_train, X_test, y_test = RUS(train, test)
 
     grid_SVC(X_train,y_train,X_test,y_test,type)
     grid_naive_bayes(X_train,y_train,X_test,y_test,type)

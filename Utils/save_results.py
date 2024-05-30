@@ -6,3 +6,8 @@ def save_results(path,grid_search,best_model,report,X_test,y_test):
         f.write(f"melhor estimador: {grid_search.best_estimator_}\n")
         f.write(f"score do melhor modelo: {best_model.score(X_test, y_test)}\n")
         f.write(f"clasificador report: {report}\n")
+
+def save_results2(path,report):
+    # salvar resultando em .txt
+    with open(path, 'w') as f:
+        f.write(f"clasificador report: {report}\n")

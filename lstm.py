@@ -1,49 +1,91 @@
-import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import classification_report
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout
-from tensorflow.keras.optimizers import Adam
+from sklearn.feature_extraction.text import TfidfVectorizer
+from Grids_Search_Models.LSTM import lstm
+from Utils.BackTranslation import dataframeWithBackTranslation
+from Utils.Ros import ROS,ROS2
+from Utils.Rus import RUS
 
-df = pd.read_csv("Dataset/minimal.csv")
+vectorizer = TfidfVectorizer()
 
-# Configurações
-max_words = 5000
-max_len = 100
-embedding_dim = 100
-# Tokenização
-tokenizer = Tokenizer(num_words=max_words)
-tokenizer.fit_on_texts(df['text'])
-sequences = tokenizer.texts_to_sequences(df['text'])
+def execute_preProcessed():
+    train = pd.read_csv("./Dataset/PreProcessed/train.csv")
+    test = pd.read_csv("./Dataset/PreProcessed/test.csv")
 
-# Padding
-X = pad_sequences(sequences, maxlen=max_len)
-y = df['label'].values
+    # simple(train,test,"preProcessed")
+    rus(train,test,"preProcessed")
+    # backTranslation(train,test,"preProcessed")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+def execute_Lematization():
+    train = pd.read_csv("./Dataset/Lematization/train.csv")
+    test = pd.read_csv("./Dataset/Lematization/test.csv")
 
-model = Sequential()
-model.add(Embedding(input_dim=max_words, output_dim=embedding_dim, input_length=max_len))
-model.add(LSTM(128, return_sequences=True))
-model.add(Dropout(0.2))
-model.add(LSTM(128))
-model.add(Dropout(0.2))
-model.add(Dense(1, activation='sigmoid'))
+    simple(train, test, "lematization")
+    ros(train, test, "lematization")
+    backTranslation(train, test, "lematization")
 
-model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.001), metrics=['accuracy'])
-model.summary()
+def execute_nonStopWords():
+    train = pd.read_csv("./Dataset/NonStopWords/train.csv")
+    test = pd.read_csv("./Dataset/NonStopWords/test.csv")
 
-history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2)
+    simple(train, test, "nonStopWords")
+    ros(train, test, "nonStopWords")
+    backTranslation(train, test, "nonStopWords")
 
-# Avaliar o modelo no conjunto de teste
-y_pred = (model.predict(X_test) > 0.5).astype("int32")
-accuracy = accuracy_score(y_test, y_pred)
+def execute_Stemming():
+    train = pd.read_csv("./Dataset/Stemming/train.csv")
+    test = pd.read_csv("./Dataset/Stemming/test.csv")
 
-report = classification_report(y_test, y_pred)
+    simple(train, test, "stemming")
+    ros(train, test, "stemming")
+    backTranslation(train, test, "stemming")
 
-print(f'Acurácia no conjunto de teste: {accuracy:.2f}')
-print(report)
+def ros(train,test,ty):
+    type = "ros_"+ty
+    X_train, y_train, X_test, y_test = ROS2(train, test)
+
+    lstm(X_train,y_train,X_test,y_test,type)
+
+def rus(train,test,ty):
+    type = "rus_"+ty
+    X_train, y_train, X_test, y_test = RUS(train, test)
+
+    lstm(X_train,y_train,X_test,y_test,type)
+    
+
+def backTranslation(train,test,ty):
+    type = "backTranslation_"+ty
+    X_train, y_train, X_test, y_test = dataframeWithBackTranslation(train, test)
+
+    X_train = X_train.fillna('')
+    X_test = X_test.fillna('')
+
+    lstm(X_train,y_train,X_test,y_test,type)
+    
+
+def simple(train,test,ty):
+    type = "simple_" + ty
+    X_train = train['text'].fillna('')
+    X_test = test['text'].fillna('')
+
+    y_train = train['label'].fillna('')
+    y_test = test['label'].fillna('')
+
+    lstm(X_train, y_train, X_test, y_test, type)
+
+
+def preprocess_text(text):
+    if isinstance(text, str):
+        return text.lower()
+    else:
+        return str(text).lower() if text is not None else ''
+
+import multiprocessing
+
+
+execute_preProcessed()
+execute_Stemming()
+execute_Lematization()
+execute_nonStopWords()
+
+print("FIM DA EXECUÇÃO :)")
+

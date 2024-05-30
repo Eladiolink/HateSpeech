@@ -25,7 +25,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
 
-df = pd.read_csv('Dataset/rotulados.csv')
+df = pd.read_csv('../Dataset/rotulados.csv')
 df_text = df['text']
 df_label = df['label']
 # train | val
@@ -89,7 +89,7 @@ print(f"Tempo de execução: {execution_time} minutos")
 
 # #model.evaluate(test_encodings, np.array(test_labels))
 
-dir_model = "./bert_original_adamW"
+dir_model = "../bert_original_adamW"
 
 model.save_pretrained(dir_model)
 tokenizer.save_pretrained(dir_model)
@@ -98,7 +98,7 @@ tokenizer.save_pretrained(dir_model)
 import pandas as pd
 import numpy as np
 
-dir_model = "bert_original_adamW"
+dir_model = "../bert_original_adamW"
 load_model=dir_model
 load_tokenizer=dir_model
 

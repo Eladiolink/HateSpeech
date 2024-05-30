@@ -9,6 +9,6 @@ args = parer.parse_args()
 from Utils.Results import gets_models_result, print_results
 
 
-res = gets_models_result("Model 1/Naive_Bayes","Naive Bayes")
+res = gets_models_result("Model4/XGboost","XG Boost")
 
 print_results(res,args.type)
