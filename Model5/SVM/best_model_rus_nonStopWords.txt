@@ -1,0 +1,13 @@
+melhores parametros: {'C': 1, 'class_weight': {0: 1, 1: 4}, 'gamma': 1, 'kernel': 'linear'}
+melhor score: 0.7577995138542609
+melhor estimador: SVC(C=1, class_weight={0: 1, 1: 4}, gamma=1, kernel='linear')
+score do melhor modelo: 0.7129866439329355
+clasificador report:               precision    recall  f1-score   support
+
+         0.0       0.86      0.61      0.71      2050
+         1.0       0.61      0.86      0.71      1469
+
+    accuracy                           0.71      3519
+   macro avg       0.73      0.73      0.71      3519
+weighted avg       0.75      0.71      0.71      3519
+

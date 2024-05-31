@@ -1,0 +1,23 @@
+melhores parametros: {'gamma': 0.2, 'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 300}
+melhor score: 0.7592653716823785
+melhor estimador: XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, device=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              gamma=0.2, grow_policy=None, importance_type=None,
+              interaction_constraints=None, learning_rate=0.1, max_bin=None,
+              max_cat_threshold=None, max_cat_to_onehot=None,
+              max_delta_step=None, max_depth=7, max_leaves=None,
+              min_child_weight=None, missing=nan, monotone_constraints=None,
+              multi_strategy=None, n_estimators=300, n_jobs=None,
+              num_parallel_tree=None, random_state=None, ...)
+score do melhor modelo: 0.7686842853083262
+clasificador report:               precision    recall  f1-score   support
+
+         0.0       0.77      0.86      0.81      2050
+         1.0       0.77      0.64      0.70      1469
+
+    accuracy                           0.77      3519
+   macro avg       0.77      0.75      0.76      3519
+weighted avg       0.77      0.77      0.76      3519
+
